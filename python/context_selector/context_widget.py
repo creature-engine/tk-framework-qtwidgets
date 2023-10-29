@@ -24,11 +24,16 @@ shotgun_fields = sgtk.platform.current_bundle().import_module("shotgun_fields")
 shotgun_menus = sgtk.platform.current_bundle().import_module("shotgun_menus")
 
 logger = sgtk.platform.get_logger(__name__)
-
+# ================================================
+# Creature Engine edits:
+# ================================================
 # fields required to create a context from a task entity without falling back to
 # a SG query
-TASK_QUERY_FIELDS = ["type", "id", "content", "project", "entity", "step"]
+TASK_QUERY_FIELDS = ["type", "id", "content", "project", "entity", "step", "sg_task_parent", "sg_task_type"]
 
+# Tweaks for Creature Engine workflow, restrict query to only find tasks that make these filters
+TASK_QUERY_FIELD_RESTRICTIONS = [["sg_task_type", "is", "Discipline"]]
+# ================================================
 
 class ContextWidget(QtGui.QWidget):
     """
@@ -267,7 +272,7 @@ class ContextWidget(QtGui.QWidget):
 
         # limit the task autocompleter to tasks only.
         # TODO: limit to tasks linked to the entity types given
-        task_types_dict = {"Task": []}
+        task_types_dict = {"Task": TASK_QUERY_FIELD_RESTRICTIONS}
         self.ui.task_search.set_searchable_entity_types(task_types_dict)
 
         # set up event filters for the task/link display labels so that when
@@ -824,7 +829,7 @@ class ContextWidget(QtGui.QWidget):
 
         # limit the task search to tasks only.
         # TODO: limit to tasks linked to entities of the types queried above
-        task_types_dict = {"Task": []}
+        task_types_dict = {"Task": TASK_QUERY_FIELD_RESTRICTIONS}
 
         # now update the types for the task completer
         self.ui.task_search.set_searchable_entity_types(task_types_dict)
