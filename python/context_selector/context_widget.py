@@ -28,8 +28,8 @@ logger = sgtk.platform.get_logger(__name__)
 # Creature Engine edits:
 # ================================================
 # fields required to create a context from a task entity without falling back to
-# a SG query
-TASK_QUERY_FIELDS = ["type", "id", "content", "project", "entity", "step", "sg_task_parent", "sg_task_type"]
+# a PTR query
+TASK_QUERY_FIELDS = ["type", "id", "content", "project", "entity", "step"]
 
 # Tweaks for Creature Engine workflow, restrict query to only find tasks that make these filters
 TASK_QUERY_FIELD_RESTRICTIONS = [["sg_task_type", "is", "Discipline"]]
@@ -979,7 +979,7 @@ def _get_context_icon_path(context):
 
 def _query_my_tasks():
     """
-    Called via bg task to query SG for tasks assigned to the current user.
+    Called via bg task to query PTR for tasks assigned to the current user.
     """
 
     bundle = sgtk.platform.current_bundle()
@@ -1014,7 +1014,7 @@ def _query_my_tasks():
 
 def _query_entity_schema(entity_type, field_name):
     """
-    Called as bg task to query SG for the field schema
+    Called as bg task to query PTR for the field schema
     for the given type and field.
 
     :param str entity_type: Entity type to query schema for
