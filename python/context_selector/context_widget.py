@@ -29,7 +29,7 @@ logger = sgtk.platform.get_logger(__name__)
 # ================================================
 # fields required to create a context from a task entity without falling back to
 # a PTR query
-TASK_QUERY_FIELDS = ["type", "id", "content", "project", "entity", "step"]
+TASK_QUERY_FIELDS = ["type", "id", "content", "project", "entity", "step", "sg_task_parent", "sg_task_type"]
 
 # Tweaks for Creature Engine workflow, restrict query to only find tasks that make these filters
 TASK_QUERY_FIELD_RESTRICTIONS = [["sg_task_type", "is", "Discipline"]]
